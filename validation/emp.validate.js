@@ -29,4 +29,14 @@ module.exports = {
     }
     response(sortData);
   },
+
+  paginationValidate: (paginationData, response) => {
+    const startIndex = paginationData.startIndex;
+    const noOfRows = paginationData.noOfRows;
+
+    if (startIndex.length > 0 && noOfRows.length > 0) {
+      return response(true);
+    }
+    return response(false);
+  },
 };

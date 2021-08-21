@@ -55,11 +55,32 @@ module.exports = {
     const searchElement = data.searchElement;
     const sortType = data.sortType;
     const sortField = data.sortField;
-    sql.query(`call getEmpBySearchingAndSorting("${searchElement}", "${sortField}", "${sortType}")`,[], (err, result)=>{
-      if(err){
-        callback(err);
+    sql.query(
+      `call getEmpBySearchingAndSorting("${searchElement}", "${sortField}", "${sortType}")`,
+      [],
+      (err, result) => {
+        if (err) {
+          callback(err);
+        }
+        return callback(null, result[0]);
       }
-      return callback(null, result[0]);
-    });
+    );
+  },
+
+  //get Employee By Pagination
+  getEmpByPagination: (data, callback) => {
+    const startIndex = data.startIndex;
+    const noOfRows = data.noOfRows;
+
+    sql.query(
+      `call getRowsByLimit(${startIndex}, ${noOfRows})`,
+      [],
+      (err, result) => {
+        if (err) {
+          callback(err);
+        }
+        return callback(null, result[0]);
+      }
+    );
   },
 };

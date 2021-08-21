@@ -6,8 +6,14 @@ const {
   getEmpByMultiProjects,
   getEmpByProjectId,
   getEmpBySearchingAndSorting,
+  getEmpByPagination,
 } = require("../service/emp.service");
-const {searchValidate, sortValidate} = require('../../validation/emp.validate');
+const {
+  searchValidate,
+  sortValidate,
+  paginationValidate,
+} = require("../../validation/emp.validate");
+const { request } = require("express");
 module.exports = {
   getAllEmployees: (request, response) => {
     getAllEmp((err, result) => {
@@ -117,9 +123,9 @@ module.exports = {
     });
     sortValidate(data.sortType.trim(), (result) => {
       sortType = result;
-    })
+    });
 
-    if(sortType.length > 0 && isSortFieldClear){
+    if (sortType.length > 0 && isSortFieldClear) {
       getEmpBySearchingAndSorting(data, (err, result) => {
         if (err) {
           console.log(err);
@@ -129,12 +135,41 @@ module.exports = {
           data: result,
         });
       });
-    }else{
+    } else {
       return response.status(400).json({
         success: false,
-        message: "Invalid Sort Type / Sort Field in Body Section !, give Sort Type  ( asc or desc )",
+        message:
+          "Invalid Sort Type / Sort Field in Body Section !, give Sort Type  ( asc or desc )",
+      });
+    }
+  },
+
+  getEmployeeByPagination: (request, response) => {
+    let isAllClear = false;
+    paginationValidate(request.body, (res) => {
+      isAllClear = res;
+    });
+    if (isAllClear) {
+      getEmpByPagination(request.body, (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+        if (result.length === 0) {
+          return response.status(404).json({
+            success: false,
+            message: "No Date found !",
+          });
+        }
+        return response.status(200).json({
+          success: true,
+          data: result,
+        });
+      });
+    } else {
+      return response.status(400).json({
+        success: false,
+        message: "All Field are Required !",
       });
     }
   },
 };
-
