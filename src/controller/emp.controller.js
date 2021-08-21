@@ -112,10 +112,10 @@ module.exports = {
     let isSortFieldClear = false;
     let sortType;
 
-    searchValidate(data.sortField, (result) => {
+    searchValidate(data.sortField.trim(), (result) => {
       isSortFieldClear = result;
     });
-    sortValidate(data.sortType, (result) => {
+    sortValidate(data.sortType.trim(), (result) => {
       sortType = result;
     })
 
@@ -132,7 +132,7 @@ module.exports = {
     }else{
       return response.status(400).json({
         success: false,
-        message: "Invalid Sort Type in Body Section !, give ( asc or desc )",
+        message: "Invalid Sort Type / Sort Field in Body Section !, give Sort Type  ( asc or desc )",
       });
     }
   },

@@ -1,6 +1,7 @@
 module.exports = {
   searchValidate: (empTableColumn, response) => {
     const empTables = [
+      "",
       "e_id",
       "e_name",
       "e_age",
