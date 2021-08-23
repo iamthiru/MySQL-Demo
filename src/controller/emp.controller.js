@@ -9,9 +9,9 @@ const {
   getEmpByPagination,
 } = require("../service/emp.service");
 const {
-  searchValidate,
-  sortValidate,
   paginationValidate,
+  sortFieldValidate,
+  sortTypeValidate,
 } = require("../validation/emp.validate");
 const { request } = require("express");
 module.exports = {
@@ -118,10 +118,10 @@ module.exports = {
     let isSortFieldClear = false;
     let sortType;
 
-    searchValidate(data.sortField.trim(), (result) => {
+    sortFieldValidate(data.sortField.trim(), (result) => {
       isSortFieldClear = result;
     });
-    sortValidate(data.sortType.trim(), (result) => {
+    sortTypeValidate(data.sortType.trim(), (result) => {
       sortType = result;
     });
 

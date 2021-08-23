@@ -1,5 +1,5 @@
 module.exports = {
-  searchValidate: (empTableColumn, response) => {
+  sortFieldValidate: (empTableColumn, response) => {
     const empTables = [
       "",
       "e_id",
@@ -17,7 +17,7 @@ module.exports = {
     }
     return response(false);
   },
-  sortValidate: (sortData, response) => {
+  sortTypeValidate: (sortData, response) => {
     if (sortData.length > 0) {
       if (
         !(sortData.toLowerCase() === "asc" || sortData.toLowerCase() === "desc")
