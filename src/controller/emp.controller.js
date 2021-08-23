@@ -12,7 +12,7 @@ const {
   searchValidate,
   sortValidate,
   paginationValidate,
-} = require("../../validation/emp.validate");
+} = require("../validation/emp.validate");
 const { request } = require("express");
 module.exports = {
   getAllEmployees: (request, response) => {
